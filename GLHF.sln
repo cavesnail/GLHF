@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLHF.Server", "GLHF.Server\GLHF.Server.csproj", "{AFD5D8CB-826E-41D5-8411-7D7EA4A79465}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "glhf.client", "glhf.client\glhf.client.esproj", "{B053105A-45A8-4672-B739-40E085174FB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFD5D8CB-826E-41D5-8411-7D7EA4A79465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD5D8CB-826E-41D5-8411-7D7EA4A79465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD5D8CB-826E-41D5-8411-7D7EA4A79465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD5D8CB-826E-41D5-8411-7D7EA4A79465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B053105A-45A8-4672-B739-40E085174FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B053105A-45A8-4672-B739-40E085174FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B053105A-45A8-4672-B739-40E085174FB6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B053105A-45A8-4672-B739-40E085174FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B053105A-45A8-4672-B739-40E085174FB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B053105A-45A8-4672-B739-40E085174FB6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16710671-FEE5-4421-8C58-2CDC8E80B422}
+	EndGlobalSection
+EndGlobal
