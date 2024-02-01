@@ -1,7 +1,6 @@
-
-namespace GLHF.Server
-{
-    public class Program
+using GLHF.Server.Models;
+namespace GLHF.Server;
+public class Program
     {
         public static void Main(string[] args)
         {
@@ -38,4 +37,4 @@ namespace GLHF.Server
             app.Run();
         }
     }
-}
+
