@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json.Nodes;
+using System.Runtime.InteropServices;
 namespace GLHF.Server.Controllers
 {
     [ApiController]
@@ -82,7 +83,11 @@ namespace GLHF.Server.Controllers
                 return NotFound();
             }
         }
-
+        public class TimeSeries
+        {
+            public string Date { get; set; }
+            public decimal Amount { get; set; }
+        }
         //SUMMARY STATISTICS
 
         /*
@@ -94,9 +99,30 @@ namespace GLHF.Server.Controllers
         - product name with most units bought
          */
         [HttpGet("timeSeries")]
-        public ActionResult getTimeSeries()
+        public ActionResult<List<TimeSeries>> GetTimeSeries()
         {
-            return BadRequest();
+            Console.WriteLine("Got time series request, generating...");
+            //spend per month, just send json object - array of mm/YYYY, spend pairs
+            List<TimeSeries> timeSeries = new();
+            IEnumerable<Purchase> purchases = _purchaseRepository.GetPurchases();
+            foreach (Purchase purchase in purchases)
+            {
+                //convert date of purchase to simple MM/YYYY format, look for it in time series, if none, add, if exists, amend param
+                string date = purchase.PurchasedAt.ToString("MM/yyyy");
+                Console.WriteLine($"DEBUG: Got date {date}.");
+                if (timeSeries.Find(i => i.Date == date) == null)
+                {
+                    Console.WriteLine($"DEBUG: Got null for {date}, adding new entry.");
+                    timeSeries.Add(new TimeSeries { Date = date, Amount = (purchase.UnitPrice * purchase.Quantity) });
+                } else
+                {
+                    Console.WriteLine($"Found existing entry for {date}, amending amount.");
+                    TimeSeries ts = timeSeries.Find(i => i.Date == date);
+                    ts.Amount = ts.Amount + (purchase.UnitPrice * purchase.Quantity);
+                }
+                Console.WriteLine("DEBUG: Finished generating time series.");
+            }
+            return timeSeries;
         }
     }
 }
