@@ -21,7 +21,7 @@
         </tbody>
       </table>
     </td>
-    <td id="detailsTable">
+    <td *ngIf="currentPurchase[0]" id="detailsTable">
       <p id="productDetailsTitle">Product Details</p>
       
       <table *ngIf="currentPurchase[0]">
