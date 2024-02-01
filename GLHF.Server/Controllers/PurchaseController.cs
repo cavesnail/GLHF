@@ -83,7 +83,7 @@ namespace GLHF.Server.Controllers
                 return NotFound();
             }
         }
-        public class TimeSeries
+        public class TimeSeriesUnit
         {
             public string Date { get; set; }
             public decimal Amount { get; set; }
@@ -99,11 +99,11 @@ namespace GLHF.Server.Controllers
         - product name with most units bought
          */
         [HttpGet("getTimeSeries")]
-        public ActionResult<List<TimeSeries>> GetTimeSeries()
+        public ActionResult<List<TimeSeriesUnit>> GetTimeSeries()
         {
             Console.WriteLine("Got time series request, generating...");
             //spend per month, just send json object - array of mm/YYYY, spend pairs
-            List<TimeSeries> timeSeries = new();
+            List<TimeSeriesUnit> timeSeries = new();
             IEnumerable<Purchase> purchases = _purchaseRepository.GetPurchases();
             foreach (Purchase purchase in purchases)
             {
@@ -113,16 +113,54 @@ namespace GLHF.Server.Controllers
                 if (timeSeries.Find(i => i.Date == date) == null)
                 {
                     Console.WriteLine($"DEBUG: Got null for {date}, adding new entry.");
-                    timeSeries.Add(new TimeSeries { Date = date, Amount = (purchase.UnitPrice * purchase.Quantity) });
+                    timeSeries.Add(new TimeSeriesUnit { Date = date, Amount = (purchase.UnitPrice * purchase.Quantity) });
                 } else
                 {
                     Console.WriteLine($"Found existing entry for {date}, amending amount.");
-                    TimeSeries ts = timeSeries.Find(i => i.Date == date);
+                    TimeSeriesUnit ts = timeSeries.Find(i => i.Date == date);
                     ts.Amount = ts.Amount + (purchase.UnitPrice * purchase.Quantity);
                 }
                 Console.WriteLine("DEBUG: Finished generating time series.");
             }
             return timeSeries;
+        }
+
+        [HttpGet("getMostExpensiveMonth")]
+        public ActionResult<string> GetMostExpensiveMonth()
+        {
+            Console.WriteLine("Got most expensive month request, generating...");
+            //spend per month, just send json object - array of mm/YYYY, spend pairs
+            List<TimeSeriesUnit> timeSeries = new();
+            IEnumerable<Purchase> purchases = _purchaseRepository.GetPurchases();
+            foreach (Purchase purchase in purchases)
+            {
+                //convert date of purchase to simple MM/YYYY format, look for it in time series, if none, add, if exists, amend param
+                string date = purchase.PurchasedAt.ToString("MM/yyyy");
+                Console.WriteLine($"DEBUG: Got date {date}.");
+                if (timeSeries.Find(i => i.Date == date) == null)
+                {
+                    Console.WriteLine($"DEBUG: Got null for {date}, adding new entry.");
+                    timeSeries.Add(new TimeSeriesUnit { Date = date, Amount = (purchase.UnitPrice * purchase.Quantity) });
+                }
+                else
+                {
+                    Console.WriteLine($"Found existing entry for {date}, amending amount.");
+                    TimeSeriesUnit ts = timeSeries.Find(i => i.Date == date);
+                    ts.Amount = ts.Amount + (purchase.UnitPrice * purchase.Quantity);
+                } 
+            }
+            Console.WriteLine("DEBUG: Finished generating time series.");
+            decimal highest = 0;
+            string bestMonth = "";
+            foreach (TimeSeriesUnit ts in timeSeries)
+            {
+                if (ts.Amount > highest)
+                {
+                    highest = ts.Amount;
+                    bestMonth = ts.Date;
+                }
+            }
+            return bestMonth;
         }
     }
 }
