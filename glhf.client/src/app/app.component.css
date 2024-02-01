@@ -43,8 +43,11 @@ table {
 }
 #tableWrapper {
     display: flex;
+    justify-content:center;
     align-items: stretch;
     width: 100%;
+    margin-left:auto;
+    margin-right:auto;
 }
 #productDetailsTitle {
     font-size: 30px;
