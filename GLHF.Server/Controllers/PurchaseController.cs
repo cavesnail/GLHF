@@ -204,5 +204,46 @@ namespace GLHF.Server.Controllers
             }
             return bestMonth;
         }
+
+        [HttpGet("getMostExpensivePurchaseProductName")]
+        public ActionResult<string> GetMostExpensivePurchaseName()
+        {
+            //just run through all purchases, keep track of most expensive, pull name
+            //question for mr. senior dev - nothing in spec addresses tiebreaking, so imma just return one product name w/ no tiebreaking - we *could* stuff a List with tied product names, but you specified product name, not names, so that's what i've gone for
+            decimal highest = 0;
+            string productName = "";
+            IEnumerable<Purchase> purchases = _purchaseRepository.GetPurchases();
+            foreach (Purchase purchase in purchases)
+            {
+                decimal cost = purchase.UnitPrice * purchase.Quantity;
+                if (cost > highest)
+                {
+                    Console.WriteLine($"DEBUG: Found new highest cost purchase: {purchase.Name} for £{cost}.");
+                    highest = cost;
+                    productName = purchase.Name;
+                }
+            }
+            Console.WriteLine("Fin.");
+            return productName;
+        }
+
+        [HttpGet("getMostUnitsBoughtProductName")]
+        public ActionResult<string> GetMostUnitsPurchaseName()  //same deal as above in terms of tiebreaking
+        {
+            int highest = 0;
+            string productName = "";
+            IEnumerable<Purchase> purchases = _purchaseRepository.GetPurchases();
+            foreach (Purchase purchase in purchases)
+            {
+                if (purchase.Quantity > highest)
+                {
+                    Console.WriteLine($"DEBUG: Found new highest unit purchase: {purchase.Name} at {purchase.Quantity} units.");
+                    highest = purchase.Quantity;
+                    productName = purchase.Name;
+                }
+            }
+            Console.WriteLine("Fin.");
+            return productName;
+        }
     }
 }
