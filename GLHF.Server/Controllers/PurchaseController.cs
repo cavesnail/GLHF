@@ -14,25 +14,19 @@ namespace GLHF.Server.Controllers
         {
             return "testString";
         }
-        [HttpGet("GetPurchases")]
-        public IEnumerable<Purchase> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new Purchase
-            {
-                UnitPrice = 0,
-                Quantity = 0,
-                Name = "wassup"
-            })
-            .ToArray();
-        }
+
         [HttpGet("getAllPurchases")]
         public IEnumerable<Purchase> GetAllPurchases()
         {
             return _purchaseRepository.GetPurchases();
         }
-        [HttpGet("getPurchase{id}")]
-        public ActionResult<Purchase> GetPurchase(long id)
+        [HttpGet("getPurchase")]
+        public ActionResult<Purchase> GetPurchase([FromQuery]long id)
         {
+            if (id == null)
+            {
+                return new StatusCodeResult(StatusCodes.Status400BadRequest);
+            }
             if (_purchaseRepository.GetPurchase(id) != null)
             {
                 return _purchaseRepository.GetPurchase(id);
