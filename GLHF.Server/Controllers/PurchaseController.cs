@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GLHF.Server.Models;
+using System.Net;
+using System.Text.Json;
 namespace GLHF.Server.Controllers
 {
     [ApiController]
@@ -7,7 +9,7 @@ namespace GLHF.Server.Controllers
     public class PurchaseController : ControllerBase
     {
 
-        readonly PurchaseRepository _purchaseRepository = new();
+        public readonly PurchaseRepository _purchaseRepository = new();
 
         [HttpGet("test")]
         public string GetString()
@@ -34,7 +36,22 @@ namespace GLHF.Server.Controllers
             {
                 return NotFound();
             }
-            
+        }
+        [HttpGet("getPurchase2")]
+        public ActionResult getPurchase2([FromQuery] long id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (_purchaseRepository.GetPurchase(id) != null)
+            {
+                return new ContentResult() { Content = JsonSerializer.Serialize(_purchaseRepository.GetPurchase(id)), StatusCode = (int)HttpStatusCode.OK };
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
