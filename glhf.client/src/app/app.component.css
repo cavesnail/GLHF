@@ -7,6 +7,7 @@ h1{
     margin-top: 1px;
     vertical-align:top;
     font-family: Calibri;
+    background: #ffb3b3;
 }
 
 tr:nth-child(even) {
@@ -55,4 +56,7 @@ table {
 
 tr.mainTableRow:hover{
     background: #ffb3b3;
+}
+tr.mainTableRow:active{
+    background: #ff6262;
 }
