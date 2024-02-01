@@ -25,4 +25,25 @@ public class Purchase
     public required int Quantity { get; set; }
     public required decimal UnitPrice { get; set; }
     public string? Description { get; set; }
+
+
+}
+public class PurchaseSimple
+{
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public DateTime PurchasedAt { get; set; }
+    public decimal totalCost { get; set; }
+    public void SetTotalCost(int Quantity, decimal UnitPrice)
+    {
+        totalCost = UnitPrice * Quantity;
+    }
+
+    public void GenerateFromPurchase(Purchase purchase)
+    {
+        Id = purchase.Id;
+        Name = purchase.Name;
+        PurchasedAt = purchase.PurchasedAt;
+        SetTotalCost(purchase.Quantity, purchase.UnitPrice);
+    }
 }

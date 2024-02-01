@@ -20,11 +20,13 @@ namespace GLHF.Server.Controllers
         [HttpGet("getAllPurchases")]
         public IEnumerable<Purchase> GetAllPurchases()
         {
+            Console.WriteLine("Got ALLpurchases request.");
             return _purchaseRepository.GetPurchases();
         }
         [HttpGet("getPurchase")]
         public ActionResult<Purchase> GetPurchase([FromQuery]long id)
         {
+            Console.WriteLine("Got purchase request.");
             if (id == null)
             {
                 return new StatusCodeResult(StatusCodes.Status400BadRequest);
