@@ -82,21 +82,21 @@ namespace GLHF.Server.Controllers
                 return NotFound();
             }
         }
-        [HttpGet("getPurchase2")]
-        public ActionResult getPurchase2([FromQuery] long id)
+
+        //SUMMARY STATISTICS
+
+        /*
+         Need the following summaries:
+        - time series of spend per month
+        - most expensive month
+        - month with most units bought
+        - product name related to the most expensive purchase
+        - product name with most units bought
+         */
+        [HttpGet("timeSeries")]
+        public ActionResult getTimeSeries()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            if (_purchaseRepository.GetPurchase(id) != null)
-            {
-                return new ContentResult() { Content = JsonSerializer.Serialize(_purchaseRepository.GetPurchase(id)), StatusCode = (int)HttpStatusCode.OK };
-            }
-            else
-            {
-                return NotFound();
-            }
+            return BadRequest();
         }
     }
 }
