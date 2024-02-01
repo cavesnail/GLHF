@@ -6,6 +6,7 @@
 h1{
     margin-top: 1px;
     vertical-align:top;
+    font-family: Calibri;
 }
 
 tr:nth-child(even) {
@@ -17,8 +18,9 @@ tr:nth-child(odd) {
 }
 
 th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-family: Calibri;
 }
 
 table {
@@ -49,4 +51,8 @@ table {
     margin-top: 0;
     vertical-align: top;
     text-align: center;
+}
+
+tr.mainTableRow:hover{
+    background: #ffb3b3;
 }
