@@ -27,6 +27,7 @@ public class Purchase
     public string? Description { get; set; }
 
 
+
 }
 public class PurchaseSimple
 {

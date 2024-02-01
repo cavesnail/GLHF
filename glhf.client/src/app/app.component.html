@@ -1,6 +1,4 @@
 <h1>Purchase Viewer</h1>
-<h2 id="tableLabel">Value: {{test}}</h2>
-
 
 <p *ngIf="!purchases"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
 <table>
@@ -9,25 +7,49 @@
       <table *ngIf="purchases" id="mainTableChild">
         <thead>
           <tr>
+            <th>Date of Purchase</th>
             <th>Name</th>
-            <th>ID</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th>Total Cost</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let purchase of purchases" (click)="getPurchaseDetails(purchase)" id={{purchase.id}} class="mainTableRow">
-            <td>{{purchase.name}}</td>
-            <td>{{purchase.id}}</td>
-            <td>three</td>
-            <td>four</td>
+          <tr *ngFor="let purchase of purchases" (click)="getPurchaseDetails(purchase)" id={{purchase.Id}} class="mainTableRow">
+            <td>{{this.datepipe.transform(purchase.PurchasedAt, "yyyy/MM/dd")}}</td>
+            <td>{{purchase.Name}}</td>
+            <td>£{{purchase.TotalCost.toFixed(2)}}</td>
           </tr>
         </tbody>
       </table>
     </td>
     <td id="detailsTable">
       <p id="productDetailsTitle">Product Details</p>
-      <p *ngIf="currentPurchase[0]">{{currentPurchase[0].name}}</p>
+      
+      <table *ngIf="currentPurchase[0]">
+        <tr>
+          <th>Name:</th>
+          <td>{{currentPurchase[0].Name}}</td>
+        </tr>
+        <tr>
+          <th>Date:</th>
+          <td>{{this.datepipe.transform(currentPurchase[0].PurchasedAt, "yyyy/MM/dd")}}</td>
+        </tr>
+        <tr>
+          <th>Cost:</th>
+          <td>£{{currentPurchase[0].TotalCost.toFixed(2)}}</td>
+        </tr>
+        <tr>
+          <th>Quantity:</th>
+          <td>{{currentPurchase[0].Quantity}}</td>
+        </tr>
+        <tr>
+          <th>Unit Price:</th>
+          <td>£{{currentPurchase[0].UnitPrice.toFixed(2)}}</td>
+        </tr>
+        <tr>
+          <th>Description:</th>
+          <td>{{currentPurchase[0].Description}}</td>
+        </tr>
+      </table>
     </td>
   </tr>
 </table>
