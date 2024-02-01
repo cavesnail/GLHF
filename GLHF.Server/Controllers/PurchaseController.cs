@@ -15,28 +15,7 @@ namespace GLHF.Server.Controllers
 
         public readonly PurchaseRepository _purchaseRepository = new();
 
-        [HttpGet("test")]
-        public string GetString()
-        {
-            return "testString";
-        }
-
         [HttpGet("getAllPurchases")]
-        public IEnumerable<PurchaseSimple> GetAllPurchases()
-        {
-            //Console.WriteLine("Got ALLpurchases request.");
-            //have list, need to recreate list but w/ PurchaseSimples
-            IEnumerable<Purchase> purchases = _purchaseRepository.GetPurchases();
-            List<PurchaseSimple> newPurchases = new();
-            foreach (Purchase purchase in purchases)
-            {
-                PurchaseSimple currentPurchase = new();
-                currentPurchase.GenerateFromPurchase(purchase);
-                newPurchases.Add(currentPurchase);
-            }
-            return newPurchases;
-        }
-        [HttpGet("getAllPurchasesTrimmed")]
         public IEnumerable<JsonObject> GetAllTrimmed()
         {
             //Console.WriteLine("Running trimmed purchase.");

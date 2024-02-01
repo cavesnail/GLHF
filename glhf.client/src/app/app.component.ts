@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   getPurchases() {
-    this.http.get<Purchase[]>('/api/purchase/getallpurchasestrimmed').subscribe(
+    this.http.get<Purchase[]>('/api/purchase/getallpurchases').subscribe(
       (result) => {
         this.purchases = result;
       },
