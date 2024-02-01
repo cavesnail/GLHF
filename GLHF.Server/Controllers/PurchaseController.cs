@@ -98,7 +98,7 @@ namespace GLHF.Server.Controllers
         - product name related to the most expensive purchase
         - product name with most units bought
          */
-        [HttpGet("timeSeries")]
+        [HttpGet("getTimeSeries")]
         public ActionResult<List<TimeSeries>> GetTimeSeries()
         {
             Console.WriteLine("Got time series request, generating...");
