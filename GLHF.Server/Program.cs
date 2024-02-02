@@ -32,7 +32,7 @@ public class Program
 
             app.MapControllers();
 
-            app.MapFallbackToFile("/index.html");
+            app.MapFallbackToFile("browser/index.html");
 
             app.Run();
         }
